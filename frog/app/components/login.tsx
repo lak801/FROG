@@ -1,9 +1,12 @@
 "use client"
 import { MongoClient, ServerApiVersion } from "mongodb";
 import mongoose from "mongoose";
+import {useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
 
+
 export default function Login() {
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
 
@@ -18,11 +21,12 @@ export default function Login() {
     const data = await res.json();
 
     if (res.ok) {
-      setMessage(`User added: ${data.userId}`);
+      console.log("User added successfully: " + username);
+      router.push(`/welcome/${username}`);
       setUsername('');
-      window.location.href = '/welcome';
     } else {
       setMessage(`Error: ${data.error}`);
+      alert('Invalid username');
     }
 
     
