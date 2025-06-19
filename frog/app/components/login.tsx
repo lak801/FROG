@@ -5,7 +5,7 @@ import {useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
 
 
-export default function Login() {
+export default function Login({roomCode}: {roomCode: string}) {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
@@ -15,17 +15,17 @@ export default function Login() {
     const res = await fetch('/api/add-user', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username }),
+      body: JSON.stringify({ username, roomCode}),
     });
-
+    console.log(res)
     const data = await res.json();
-
     if (res.ok) {
-      console.log("User added successfully: " + username);
+      console.log(data);
       router.push(`/welcome/${username}`);
       setUsername('');
     } else {
       setMessage(`Error: ${data.error}`);
+      console.log(data.error)
       alert('Invalid username');
     }
 

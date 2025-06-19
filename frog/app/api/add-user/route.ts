@@ -5,15 +5,15 @@ import User from '../../components/models/User';
 
 export async function POST(req: NextRequest) {
   try {
-    const { username } = await req.json();
+    const { username, roomCode} = await req.json();
 
-    if (!username) {
-      return NextResponse.json({ error: 'Username is required' }, { status: 400 });
+    if (!username || !roomCode) {
+      return NextResponse.json({ error: 'Username and roomCode are required' }, { status: 400 });
     }
 
     await connectToDatabase();
-
-    const user = new User({ username });
+    
+    const user = new User({ username, roomCode });
     await user.save();
 
     return NextResponse.json({ userId: user._id });
