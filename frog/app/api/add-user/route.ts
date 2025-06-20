@@ -1,9 +1,10 @@
 // app/api/add-user/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { connectToDatabase } from '../../lib/mongodb';
-import User from '../../components/models/User';
+import { connectToDatabase } from '../../../lib/mongodb';
+import User from '../../../components/models/User';
 
 export async function POST(req: NextRequest) {
+  
   try {
     const { username, roomCode} = await req.json();
 
